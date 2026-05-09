@@ -1,116 +1,205 @@
-.logo.vite:hover {
-  filter: drop-shadow(0 0 2em #747bff);
-}
+/**
+ * This file is temporary styling.
+ *
+ * Later, we can switch this to Tailwind once the app logic is working.
+ * For now, plain CSS keeps the first mockup easy to understand.
+ */
 
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafb);
-}
 :root {
-  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  line-height: 24px;
-  font-weight: 400;
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
 
-  color: #0f0f0f;
-  background-color: #f6f6f6;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
+  color: #172033;
+  background: #eef4ff;
 }
 
-.container {
+* {
+  box-sizing: border-box;
+}
+
+body {
   margin: 0;
-  padding-top: 10vh;
+}
+
+/**
+ * Centers the widget in the app window.
+ */
+.app-shell {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.95), transparent 32%),
+    linear-gradient(135deg, #eef4ff, #f8fbff);
+}
+
+/**
+ * Outer widget container.
+ *
+ * This starts creating the "soft floating desktop tile" feel.
+ */
+.widget-frame {
+  width: min(440px, 100%);
+  padding: 18px;
+  border-radius: 32px;
+
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+
+  box-shadow:
+    0 24px 80px rgba(65, 91, 140, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+
+  backdrop-filter: blur(16px);
+}
+
+/**
+ * Main word card.
+ */
+.word-card {
+  min-height: 250px;
+  padding: 32px;
+  border-radius: 28px;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
-  text-align: center;
+
+  background:
+    radial-gradient(circle at top right, rgba(211, 232, 255, 0.95), transparent 40%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(240, 247, 255, 0.92));
+
+  border: 1px solid rgba(210, 225, 250, 0.9);
+
+  box-shadow:
+    0 14px 38px rgba(51, 86, 140, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.96);
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: 0.75s;
+.word-card__source {
+  margin: 0 0 14px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #637594;
 }
 
-.logo.tauri:hover {
-  filter: drop-shadow(0 0 2em #24c8db);
+.word-card__word {
+  margin: 0;
+  font-size: clamp(2.5rem, 8vw, 4.75rem);
+  line-height: 0.95;
+  letter-spacing: -0.08em;
+  color: #172033;
 }
 
-.row {
+.word-card__definition {
+  margin: 22px 0 0;
+  max-width: 34ch;
+  font-size: 1.02rem;
+  line-height: 1.6;
+  color: #53627c;
+}
+
+/**
+ * Navigation controls under the card.
+ */
+.nav-row {
   display: flex;
-  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  margin-top: 16px;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
+.nav-row button {
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 14px;
 
-a:hover {
-  color: #535bf2;
-}
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
 
-h1 {
-  text-align: center;
-}
+  color: #384760;
+  background: rgba(255, 255, 255, 0.74);
 
-input,
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  color: #0f0f0f;
-  background-color: #ffffff;
-  transition: border-color 0.25s;
-  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
-}
+  box-shadow:
+    0 8px 22px rgba(65, 91, 140, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
 
-button {
   cursor: pointer;
 }
 
-button:hover {
-  border-color: #396cd8;
-}
-button:active {
-  border-color: #396cd8;
-  background-color: #e8e8e8;
+.nav-row button:hover {
+  transform: translateY(-1px);
 }
 
-input,
-button {
-  outline: none;
+.source-tabs {
+  display: flex;
+  gap: 8px;
 }
 
-#greet-input {
-  margin-right: 5px;
+.source-tab {
+  opacity: 0.58;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    color: #f6f6f6;
-    background-color: #2f2f2f;
-  }
+.source-tab.active {
+  opacity: 1;
+  color: #102038;
+  background: #ffffff;
+}
 
-  a:hover {
-    color: #24c8db;
-  }
+.status-text {
+  font-weight: 700;
+  color: #53627c;
+}
+/**
+ * Small top row for the widget title and refresh action.
+ */
+.widget-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-  input,
-  button {
-    color: #ffffff;
-    background-color: #0f0f0f98;
-  }
-  button:active {
-    background-color: #0f0f0f69;
-  }
+  margin-bottom: 14px;
+  padding: 0 4px;
+}
+
+.widget-title {
+  margin: 0;
+
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  color: #637594;
+}
+
+.refresh-button {
+  border: 0;
+  border-radius: 999px;
+  padding: 8px 12px;
+
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 800;
+
+  color: #384760;
+  background: rgba(255, 255, 255, 0.76);
+
+  box-shadow:
+    0 8px 22px rgba(65, 91, 140, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+
+  cursor: pointer;
+}
+
+.refresh-button:hover {
+  transform: translateY(-1px);
 }

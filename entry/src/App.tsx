@@ -1,49 +1,83 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import { invoke } from "@tauri-apps/api/core";
 import "./App.css";
+import { WordCard } from "./components/WordCard";
+import { useDailyWords } from "./hooks/useDailyWords";
 
 function App() {
-  const [greetMsg, setGreetMsg] = useState("");
-  const [name, setName] = useState("");
+  const {
+    words,
+    currentIndex,
+    currentWord,
+    loading,
+    error,
+    nextWord,
+    previousWord,
+    selectWord,
+    refreshWords,
+  } = useDailyWords();
 
-  async function greet() {
-    // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-    setGreetMsg(await invoke("greet", { name }));
+  if (loading) {
+    return (
+      <main className="app-shell">
+        <p className="status-text">Loading today&apos;s words...</p>
+      </main>
+    );
+  }
+
+  if (error) {
+    return (
+      <main className="app-shell">
+        <p className="status-text">Failed to load words: {error}</p>
+      </main>
+    );
+  }
+
+  if (!currentWord) {
+    return (
+      <main className="app-shell">
+        <p className="status-text">No words available.</p>
+      </main>
+    );
   }
 
   return (
-    <main className="container">
-      <h1>Welcome to Tauri + React</h1>
+    <main className="app-shell">
+      <div className="widget-frame">
+        <div className="widget-topbar">
+          <p className="widget-title">Entry</p>
 
-      <div className="row">
-        <a href="https://vite.dev" target="_blank">
-          <img src="/vite.svg" className="logo vite" alt="Vite logo" />
-        </a>
-        <a href="https://tauri.app" target="_blank">
-          <img src="/tauri.svg" className="logo tauri" alt="Tauri logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+          <button type="button" className="refresh-button" onClick={refreshWords}>
+            Refresh
+          </button>
+        </div>
+        <WordCard word={currentWord} />
+
+        <div className="nav-row">
+          <button type="button" onClick={previousWord}>
+            Previous
+          </button>
+
+          <div className="source-tabs">
+            {words.map((word, index) => {
+              const isActive = index === currentIndex;
+
+              return (
+                <button
+                  key={word.source}
+                  type="button"
+                  className={isActive ? "source-tab active" : "source-tab"}
+                  onClick={() => selectWord(index)}
+                >
+                  {word.sourceDisplayName}
+                </button>
+              );
+            })}
+          </div>
+
+          <button type="button" onClick={nextWord}>
+            Next
+          </button>
+        </div>
       </div>
-      <p>Click on the Tauri, Vite, and React logos to learn more.</p>
-
-      <form
-        className="row"
-        onSubmit={(e) => {
-          e.preventDefault();
-          greet();
-        }}
-      >
-        <input
-          id="greet-input"
-          onChange={(e) => setName(e.currentTarget.value)}
-          placeholder="Enter a name..."
-        />
-        <button type="submit">Greet</button>
-      </form>
-      <p>{greetMsg}</p>
     </main>
   );
 }
