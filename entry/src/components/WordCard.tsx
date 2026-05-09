@@ -2,9 +2,6 @@ import type { DailyWord } from "../types/dailyWord";
 
 /**
  * Props are the inputs this component needs.
- *
- * This is similar to passing arguments into a Java method,
- * except React components receive one props object.
  */
 type WordCardProps = {
   /**
@@ -16,22 +13,23 @@ type WordCardProps = {
 /**
  * Displays one daily word card.
  *
- * For now, this only shows:
- * - source name
- * - word
- * - short definition
- *
- * Later, this same component can expand to show pronunciation,
- * examples, synonyms, audio, etc.
+ * This component now understands error/fallback cards too.
+ * That means one provider can fail without breaking the whole app.
  */
 export function WordCard({ word }: WordCardProps) {
+  const isError = word.status === "error";
+
   return (
-    <section className="word-card">
+    <section className={isError ? "word-card word-card--error" : "word-card"}>
       <p className="word-card__source">{word.sourceDisplayName}</p>
 
       <h1 className="word-card__word">{word.word}</h1>
 
       <p className="word-card__definition">{word.shortDefinition}</p>
+
+      {isError && word.errorMessage && (
+        <p className="word-card__error-detail">{word.errorMessage}</p>
+      )}
     </section>
   );
 }

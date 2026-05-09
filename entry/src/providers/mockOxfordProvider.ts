@@ -11,6 +11,7 @@ export const mockOxfordProvider: DailyWordProvider = {
   sourceDisplayName: "Oxford",
 
   async getDailyWord(): Promise<DailyWord> {
+    
     return {
       source: "oxford",
       sourceDisplayName: "Oxford",

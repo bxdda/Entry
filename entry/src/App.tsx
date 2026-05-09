@@ -1,6 +1,7 @@
 import "./App.css";
 import { WordCard } from "./components/WordCard";
 import { useDailyWords } from "./hooks/useDailyWords";
+import { apiConfig } from "./services/apiConfig";
 
 function App() {
   const {
@@ -43,7 +44,10 @@ function App() {
     <main className="app-shell">
       <div className="widget-frame">
         <div className="widget-topbar">
-          <p className="widget-title">Entry</p>
+          <div>
+            <p className="widget-title">Entry</p>
+            <p className="widget-mode">Mode: {apiConfig.providerMode}</p>
+          </div>
 
           <button type="button" className="refresh-button" onClick={refreshWords}>
             Refresh

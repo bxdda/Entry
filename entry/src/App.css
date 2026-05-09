@@ -203,3 +203,32 @@ body {
 .refresh-button:hover {
   transform: translateY(-1px);
 }
+/**
+ * Visual style for a provider card that failed to load.
+ */
+.word-card--error {
+  background:
+    radial-gradient(circle at top right, rgba(255, 224, 224, 0.95), transparent 40%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(255, 244, 244, 0.92));
+
+  border-color: rgba(255, 190, 190, 0.9);
+}
+
+.word-card__error-detail {
+  margin: 14px 0 0;
+
+  font-size: 0.82rem;
+  line-height: 1.45;
+
+  color: #9b3b3b;
+}
+.widget-mode {
+  margin: 3px 0 0;
+
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  color: #8a98af;
+}
